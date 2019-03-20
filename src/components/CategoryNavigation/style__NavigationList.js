@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { colors } from "../../variables";
 
-const StyledNavigationList = styled.ul`
+export const StyledNavigationList = styled.ul`
   margin: 0;
   padding: 0;
-  border-block-end: 1px solid ${colors.lightGrey};
   overflow: auto;
   white-space: nowrap;
   scrollbar-width: none;
@@ -17,4 +16,8 @@ const StyledNavigationList = styled.ul`
   }
 `;
 
-export default StyledNavigationList;
+export const StyledNavigation = styled.nav`
+  display: flex;
+  justify-content: space-between;
+  border-block-end: 1px solid ${colors.lightGrey};
+`;

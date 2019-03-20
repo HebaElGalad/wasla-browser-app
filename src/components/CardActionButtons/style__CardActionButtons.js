@@ -41,6 +41,13 @@ export const StyledActionItem = styled.li`
       background-image: url(${shareIconYellow});
     }
   }
+  @media (max-width: 479px) {
+    padding: 4px 10px;
+    &.save,
+    &.share {
+      padding-left: 14px;
+    }
+  }
 `;
 
 export const StyledNavLink = styled.a`

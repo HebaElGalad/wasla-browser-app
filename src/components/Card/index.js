@@ -1,25 +1,29 @@
 import React, { Component } from "react";
+import uuid from "uuid/v4";
+
 import StyledCardWrapper from "./style__Card";
 import CardImage from "../CardImage";
 import CardHeader from "../CardHeader";
 import CardFooter from "../CardFooter";
 
+import { NewsConsumer } from "../../contexts/NewsContext";
+
 class Card extends Component {
   render() {
     return (
-      <StyledCardWrapper>
-        <CardHeader
-          title="الصحة تواجه طوفان ولادة طفل كل 15 ثانية.."
-          url="https://www.youm7.com/story/2019/2/5/الصحة-تواجه-طوفان-ولادة-طفل-كل-15-ثانية-128-منطقة/4129373"
-        />
-        <div className="card__body">
-          <CardImage
-            url="https://img.youm7.com/large/20190115010338338.jpg"
-            title="Egyptian Health Minister"
-          />
-        </div>
-        <CardFooter />
-      </StyledCardWrapper>
+      <NewsConsumer>
+        {(context) =>
+          context.map((item) => (
+            <StyledCardWrapper key={uuid()}>
+              <CardHeader url={item.url} title={item.title} />
+              <div className="card__body">
+                <CardImage url={item.urlToImage} title={item.title} />
+              </div>
+              <CardFooter name={item.source.name} time={item.publishedAt} />
+            </StyledCardWrapper>
+          ))
+        }
+      </NewsConsumer>
     );
   }
 }
