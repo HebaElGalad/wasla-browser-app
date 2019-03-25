@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import uuid from "uuid/v4";
 
-import StyledCardWrapper from "./style__Card";
+import { StyledCardWrapper, StyledCardBody } from "./style__Card";
 import CardImage from "../CardImage";
 import CardHeader from "../CardHeader";
 import CardFooter from "../CardFooter";
@@ -16,10 +16,10 @@ class Card extends Component {
           context.map((item) => (
             <StyledCardWrapper key={uuid()}>
               <CardHeader url={item.url} title={item.title} />
-              <div className="card__body">
-                <CardImage url={item.urlToImage} title={item.title} />
-              </div>
-              <CardFooter name={item.source.name} time={item.publishedAt} />
+              <StyledCardBody>
+                <CardImage url={item.image} title={item.title} />
+              </StyledCardBody>
+              <CardFooter name={item.name} time={item.time} />
             </StyledCardWrapper>
           ))
         }
