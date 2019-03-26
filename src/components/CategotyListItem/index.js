@@ -1,13 +1,20 @@
 import React, { Component } from "react";
 import { StyledListItem, StyledNavLink } from "./style__listItem";
+import { CategoriesConsumer } from "../../contexts/CategoriesContext";
 
 class CategoryListItem extends Component {
   render() {
-    const { children, className } = this.props;
+    const { children } = this.props;
     return (
-      <StyledListItem className={className}>
-        <StyledNavLink href="#">{children}</StyledNavLink>
-      </StyledListItem>
+      <CategoriesConsumer>
+        {(context) => (
+          <StyledListItem>
+            <StyledNavLink href="#" onClick={context.selectCategory}>
+              {children}
+            </StyledNavLink>
+          </StyledListItem>
+        )}
+      </CategoriesConsumer>
     );
   }
 }

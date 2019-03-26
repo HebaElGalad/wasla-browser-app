@@ -11,7 +11,7 @@ export const StyledListItem = styled.li`
     margin-inline-start: 12px;
   }
   &.active {
-    /* border-block-end: 2px solid ${colors.primary}; */
+    border-block-end: 2px solid ${colors.primary};
   }
 `;
 

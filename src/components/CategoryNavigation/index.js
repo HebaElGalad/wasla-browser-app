@@ -15,8 +15,8 @@ class CategoryNavigation extends Component {
         {(context) => (
           <StyledNavigation>
             <StyledNavigationList>
-              {context.map((category) => (
-                <CategoryListItem key={category.id} className="active">
+              {context.categories.map((category) => (
+                <CategoryListItem key={category.id}>
                   {category.name}
                 </CategoryListItem>
               ))}

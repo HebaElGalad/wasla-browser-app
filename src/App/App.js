@@ -12,14 +12,45 @@ import { NewsProvider } from "../contexts/NewsContext";
 import { SelectSubCategoryProvider } from "../contexts/SelectSubCategoryContext";
 class App extends Component {
   state = {
-    categories: [],
-    subCategory: [],
+    categories: [
+      {
+        id: 1,
+        name: "News"
+      }
+    ],
+    subCategory: [
+      {
+        id: 1,
+        name: "General"
+      },
+      {
+        id: 2,
+        name: "Technology"
+      },
+      {
+        id: 3,
+        name: "Lifestyle"
+      },
+      {
+        id: 4,
+        name: "Quotes"
+      },
+      {
+        id: 5,
+        name: "Sports"
+      },
+      {
+        id: 6,
+        name: "Business"
+      }
+    ],
     news: [],
     country: "eg",
     selectSubCategory: "",
     page: 1,
     hasMore: true,
-    isLoading: true
+    isLoading: true,
+    categoryKey: 1
   };
 
   loadCategories = () => {
@@ -36,7 +67,11 @@ class App extends Component {
 
   loadSubCategories = () => {
     axios
-      .get("https://api.myjson.com/bins/6frhm?cat=1")
+      .get("https://api.myjson.com/bins/6frhm", {
+        params: {
+          cat: this.state.categoryKey
+        }
+      })
       .then((response) => {
         // console.log(response.data);
         this.setState({
@@ -102,13 +137,35 @@ class App extends Component {
   };
 
   handelClick = (e) => {
-    this.setState( ({
+    this.setState(
+      {
         selectSubCategory: $(e.target).text(),
         isLoading: true,
         news: []
-      }),
+      },
       () => this.loadArticles()
     );
+  };
+
+  selectCategory = (e) => {
+    $(e.target)
+      .siblings()
+      .remove("active");
+    $(e.target).addClass("active");
+    const value = $(e.target).text();
+    const category = this.state.categories.find((item) => item.name === value);
+    this.setState(
+      {
+        categoryKey: category.id,
+        isLoading: true,
+        news: []
+      },
+      () => {
+        this.loadSubCategories();
+        this.loadArticles();
+      }
+    );
+    console.log("I was clicked", value);
   };
 
   componentDidMount() {
@@ -123,13 +180,11 @@ class App extends Component {
     });
   }
 
-  // componentWillMount() {
-  // }
-
   render() {
     const { categories, subCategory, news } = this.state;
     return (
-      <CategoriesProvider value={categories}>
+      <CategoriesProvider
+        value={{ categories, selectCategory: this.selectCategory }}>
         <div className="App">
           <CategoryNavigation />
           <SubCategoryProvider value={subCategory}>
